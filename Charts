@@ -1,0 +1,24 @@
+//mailing the charts from the spreadsheet
+
+function emailChartSourceImage(){
+  const sheet = SpreadsheetApp.getActiveSheet(); 
+  const charts = sheet.getCharts(); 
+  
+  // email variables
+  const chartBlobs = new Array(); 
+  const emailImages = {};
+  let emailBody = "Charts<br>"; 
+  
+  charts.forEach(function(chart, i){
+    chartBlobs[i] = chart.getAs("image/png");
+    emailBody += "<p align='center'><img src='cid:chart"+i+"'></p>";
+    emailImages["chart"+i] = chartBlobs[i];
+  });
+  
+ //mail
+  MailApp.sendEmail({
+    to: "//senders mail address",
+    subject: "Chart for average marks per subject",
+    htmlBody: emailBody,
+    inlineImages:emailImages}); 
+}

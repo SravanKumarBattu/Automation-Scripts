@@ -1,0 +1,53 @@
+//reminding a particular day by adding no.of days to registered date
+
+
+function printEntireData() {
+ 
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+var sheet = ss.getSheets()[0];
+
+// This represents ALL the data
+var range = sheet.getDataRange();
+var values = range.getValues(); 
+var registered_date=new Date();
+
+
+//number of days to set reminder function call it as "date.addDays(no.of days)"
+
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+//implementing the add date(X) logic with the timestamp
+
+for (var i = 1; i < values.length; i++) {
+   var row = "";
+   var j=0; 
+
+  var registered_date=new Date(values[i][j]);
+  var reminding_date=registered_date.addDays(5);
+  Logger.log(reminding_date);
+
+  //now check with the current_time and reminding_time to check for updates
+  
+  var current_date= new Date();
+  if(reminding_date===current_date)
+  {
+    Logger.log("SUCCESS");
+  }
+  else
+  {
+    Logger.log("Not the correct time");
+  }
+   
+     
+  }
+
+  
+  
+}
+
+
+ 
